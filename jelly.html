@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<body onkeydown="key(event)">
+<script src="will.js"></script>
+<canvas id="area" width="600" height="600" style="border: 2px solid black;"></canvas>
+<script>
+var addx = 0;
+var addy = 0;
+var numofthings = 100;
+var z;
+var canvas = document.getElementById("area");
+var ctx = canvas.getContext("2d");
+var current = [];
+var tocurrent = [];
+for (i=0; i<numofthings; i++) {
+current.push({x:Math.random() * 100, y:Math.random() * 100});
+tocurrent.push({x:Math.random() * 100, y:Math.random() * 100});
+}
+update();
+function update() {
+setTimeout(update, 3);
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, 600, 600);
+ctx.fillStyle = "red";
+for (i=0; i<numofthings; i++) {
+tocurrent[i].y += addy;
+tocurrent[i].x += addx;
+addy += .001;
+addx /= 1.001;
+}
+for (i=0; i<numofthings; i++) {
+ctx.fillRect(current[i].x, current[i].y, 30, 30);
+//ctx.fillRect(tocurrent[i].x, tocurrent[i].y, 30, 30);
+z = Math.floor(Math.random()*numofthings);
+movetoward(current[i], parseInt(tocurrent[i].x), parseInt(tocurrent[i].y), Math.random()*10);
+//rotate(tocurrent[i], Math.random(), 300, 300);
+}
+//console.log(current);
+}
+function key(event) {
+event = event.key;
+if (event == "ArrowUp") {
+addy = -5;
+}
+if (event == "ArrowDown") {
+addy = 5;
+}
+if (event == "ArrowLeft") {
+addx = -5;
+}
+if (event == "ArrowRight") {
+addx = 5;
+}
+}
+</script>
+</body>
+</html>
